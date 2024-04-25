@@ -1,5 +1,9 @@
 import React from "react";
+import { FriendsList } from "./Components/FriendsList";
 
+import "./index.css";
+
+//array of objects
 const initialFriends = [
   {
     id: 118836,
@@ -22,5 +26,11 @@ const initialFriends = [
 ];
 
 export const App = () => {
-  return <div>App</div>;
+  return (
+    <div className="app">
+      <div className="sidebar">
+        <FriendsList />
+      </div>
+    </div>
+  );
 };
