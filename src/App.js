@@ -1,7 +1,10 @@
-import React from "react";
+import { useState } from "react";
 import { FriendsList } from "./Components/FriendsList";
 
 import "./index.css";
+import { AddNewFriend } from "./Components/AddNewFriend";
+import { Button } from "./Components/UI/Button";
+import { Split } from "./Components/Split";
 
 //array of objects
 const initialFriends = [
@@ -26,11 +29,25 @@ const initialFriends = [
 ];
 
 export const App = () => {
+  const [showAddFriend, setShowAddFriend] = useState(false);
+
+  const handleClick = () => {
+    //setShowAddFriend(!showAddFriend);
+    //works the above way but we should do it with an anonymous callback function instead
+    setShowAddFriend((show) => !show);
+  };
+
   return (
     <div className="app">
       <div className="sidebar">
         <FriendsList initialFriends={initialFriends} />
+        {showAddFriend && <AddNewFriend />}
+
+        <Button onClick={handleClick}>
+          {showAddFriend ? "Close" : "Add Friend"}
+        </Button>
       </div>
+      <Split />
     </div>
   );
 };
