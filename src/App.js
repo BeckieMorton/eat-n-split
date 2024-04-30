@@ -29,7 +29,7 @@ export const App = () => {
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList />
+        <FriendsList initialFriends={initialFriends} />
       </div>
     </div>
   );
