@@ -1,8 +1,7 @@
 import React from "react";
 import { Friend } from "./Friend";
 
-export const FriendsList = ({ initialFriends }) => {
-  const friends = initialFriends;
+export const FriendsList = ({ initialFriends, friends }) => {
   return (
     <ul>
       {friends.map((friend) => (

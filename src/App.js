@@ -31,17 +31,24 @@ const initialFriends = [
 export const App = () => {
   const [showAddFriend, setShowAddFriend] = useState(false);
 
+  const [friends, setFriends] = useState(initialFriends);
+
   const handleClick = () => {
     //setShowAddFriend(!showAddFriend);
     //works the above way but we should do it with an anonymous callback function instead
     setShowAddFriend((show) => !show);
   };
 
+  const handleAddFriend = (friend) => {
+    //cant use push as it would not create a new array and therefore react wouldnt rerender, we shouldnt mutate original arrays, and we arent allowed to mutate probs
+    setFriends((friends) => [...friends, friend]);
+  };
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList initialFriends={initialFriends} />
-        {showAddFriend && <AddNewFriend />}
+        <FriendsList initialFriends={initialFriends} friends={friends} />
+        {showAddFriend && <AddNewFriend onAddFriend={handleAddFriend} />}
 
         <Button onClick={handleClick}>
           {showAddFriend ? "Close" : "Add Friend"}
