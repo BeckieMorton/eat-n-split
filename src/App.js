@@ -30,8 +30,8 @@ const initialFriends = [
 
 export const App = () => {
   const [showAddFriend, setShowAddFriend] = useState(false);
-
   const [friends, setFriends] = useState(initialFriends);
+  const [selectedFriend, setSelectedFriend] = useState(null);
 
   const handleClick = () => {
     //setShowAddFriend(!showAddFriend);
@@ -42,19 +42,32 @@ export const App = () => {
   const handleAddFriend = (friend) => {
     //cant use push as it would not create a new array and therefore react wouldnt rerender, we shouldnt mutate original arrays, and we arent allowed to mutate probs
     setFriends((friends) => [...friends, friend]);
+    //hide form again once new friend is added
+    setShowAddFriend(false);
   };
+
+  const handleSelection = (friend) => {
+    //? below is optional chaining in js
+    setSelectedFriend((cur) => (cur?.id === friend.id ? null : friend));
+  };
+
+  console.log(`which is selected friend:`, selectedFriend);
 
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList initialFriends={initialFriends} friends={friends} />
+        <FriendsList
+          friends={friends}
+          selectedFriend={selectedFriend}
+          onSelection={handleSelection}
+        />
         {showAddFriend && <AddNewFriend onAddFriend={handleAddFriend} />}
 
         <Button onClick={handleClick}>
           {showAddFriend ? "Close" : "Add Friend"}
         </Button>
       </div>
-      <Split />
+      {selectedFriend && <Split selectedFriend={selectedFriend} />}
     </div>
   );
 };
