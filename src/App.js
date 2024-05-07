@@ -16,7 +16,7 @@ const initialFriends = [
   },
   {
     id: 933372,
-    name: "Sarah",
+    name: "Helen",
     image: "https://i.pravatar.cc/48?u=933372",
     balance: 20,
   },
@@ -49,9 +49,18 @@ export const App = () => {
   const handleSelection = (friend) => {
     //? below is optional chaining in js
     setSelectedFriend((cur) => (cur?.id === friend.id ? null : friend));
+    setShowAddFriend(false);
   };
 
-  console.log(`which is selected friend:`, selectedFriend);
+  const handleSplitBill = (value) => {
+    setFriends((friends) =>
+      friends.map((friend) =>
+        friend.id === selectedFriend.id
+          ? { ...friend, balance: friend.balance + value }
+          : friend
+      )
+    );
+  };
 
   return (
     <div className="app">
@@ -67,7 +76,9 @@ export const App = () => {
           {showAddFriend ? "Close" : "Add Friend"}
         </Button>
       </div>
-      {selectedFriend && <Split selectedFriend={selectedFriend} />}
+      {selectedFriend && (
+        <Split selectedFriend={selectedFriend} onSplitBill={handleSplitBill} />
+      )}
     </div>
   );
 };
